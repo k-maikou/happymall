@@ -1,0 +1,59 @@
+{
+  "code": "200",
+  "request": [
+    {
+      "id": "1",
+      "title": "首页",
+      "path": "/",
+      "key": "home"
+    },
+    {
+      "id": "2",
+      "title": "商品",
+      "path": "/product",
+      "key": "product",
+      "children": [
+        {
+          "id": "2.1",
+          "title": "商品管理",
+          "path": "/product",
+          "key": "product-1"
+        },
+        {
+          "id": "2.2",
+          "title": "品类管理",
+          "path": "/product-category",
+          "key": "product-category"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "订单",
+      "path": "/order",
+      "key": "order",
+      "children": [
+        {
+          "id": "3.1",
+          "title": "订单管理",
+          "path": "/order",
+          "key": "order-1"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "用户",
+      "path": "/user",
+      "key": "user",
+      "children": [
+        {
+          "id": "4.1",
+          "title": "用户管理",
+          "path": "/user",
+          "key": "user-1"
+        }
+      ]
+    }
+  ]
+}
