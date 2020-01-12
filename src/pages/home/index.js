@@ -19,10 +19,10 @@ class Home extends Component {
     this.loadCount();
   }
 
-  loadCount = () => {
-    const result = axios.getHomeCount();
-    console.log(result);
-    this.setState(result);
+  loadCount = async () => {
+    const { data } = await axios.getHomeCount();
+    console.log(data);
+    this.setState(data.data);
   }
 
   render() {
