@@ -20,6 +20,12 @@ class Axios {
       method: 'POST'
     })
   }
+  // 首页数据请求
+  static  getHomeCount = () => {
+    return request({
+      url: '/manage/statistic/base_count.do',
+    })
+  }
 }
 
 export default Axios;
