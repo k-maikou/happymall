@@ -10,6 +10,9 @@ class Axios {
       params: {
         username,
         password,
+      },
+      xhrFields: {
+        withCredentials: true
       }
     })
   }
@@ -24,6 +27,19 @@ class Axios {
   static  getHomeCount = () => {
     return request({
       url: '/manage/statistic/base_count.do',
+    })
+  }
+  // 用户列表
+  static getUserList = (pageNum) => {
+    return request({
+      url: '/manage/user/list.do',
+      method: 'POST',
+      params: {
+        pageNum
+      },
+      xhrFields: {
+        withCredentials: true
+      }
     })
   }
 }

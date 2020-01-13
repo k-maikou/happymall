@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import axios from '../../network';
+// import axios from '../../network';
 import { doLogin, getUrlParams, checkLoginInfo, setStorage } from '../../utils';
 import './index.scss';
+
+import MUtil from '../../utils/mm';
+import User from '../../utils/user-service';
+
+const _mm   = new MUtil();
+const _user = new User();
 
 class Login extends Component {
 
@@ -15,7 +21,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    document.title = '登录 - MALL ADMIN'
+    document.title = '登录 - MALL ADMIN';
   }
 
   // 监听用户名和密码输入
@@ -30,33 +36,52 @@ class Login extends Component {
 
   // 登录
   onSubmit = async () => {
-    
-    const { username, password, redirect } = this.state;
-    let loginInfo = { username, password };
-    let checkResult = checkLoginInfo(loginInfo);
 
-    try {
-      if (checkResult.status === true) {
-
-        const { data } = await axios.getSideNavData(username, password);
-        setStorage('userInfo', data.data);
-        if (data.status === 0) {
-          this.props.history.push(redirect);
-        } else if(data.status === 10) {
-          doLogin();
-        } else {
-          this.user.value = '';
-          this.password.value = '';
-          alert(data.msg);
-        }
-
-      } else if (checkResult.status === false) {
-        alert(checkResult.msg)
-      }
-
-    } catch (error) {
-      throw error;
+    let loginInfo = {
+      username : this.state.username,
+      password : this.state.password
+    },
+    checkResult = _user.checkLoginInfo(loginInfo);
+    // 验证通过
+    if(checkResult.status){
+      _user.login(loginInfo).then((res) => {
+          _mm.setStorage('userInfo', res);
+          this.props.history.push(this.state.redirect);
+      }, (errMsg) => {
+          _mm.errorTips(errMsg);
+      });
     }
+    // 验证不通过
+    else{
+      _mm.errorTips(checkResult.msg);
+    }
+
+    // const { username, password, redirect } = this.state;
+    // let loginInfo = { username, password };
+    // let checkResult = checkLoginInfo(loginInfo);
+
+    // try {
+    //   if (checkResult.status === true) {
+
+    //     const { data } = await axios.getSideNavData(username, password);
+    //     setStorage('userInfo', data.data);
+    //     if (data.status === 0) {
+    //       this.props.history.push(redirect);
+    //     } else if(data.status === 10) {
+    //       doLogin();
+    //     } else {
+    //       this.user.value = '';
+    //       this.password.value = '';
+    //       alert(data.msg);
+    //     }
+
+    //   } else if (checkResult.status === false) {
+    //     alert(checkResult.msg)
+    //   }
+
+    // } catch (error) {
+    //   throw error;
+    // }
     
   }
 

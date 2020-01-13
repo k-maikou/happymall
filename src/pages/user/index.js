@@ -1,8 +1,40 @@
 import React, { Component } from 'react';
+import axios from '../../network';
 import PageTitle from '../../components/pageTitle';
 import Pagination from '../../components/pagination';
+import MUtil from '../../utils/mm';
+import UserList from '../../utils/user-service';
+// import { doLogin } from '../../utils';
+
+const _mm   = new MUtil();
+const _user = new UserList();
 
 class User extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      pageNum: 1
+    }
+  }
+
+  componentDidMount() {
+    this.loadUserList();
+  }
+
+  loadUserList = () => {
+    // const { pageNum } = this.state;
+    // const data = await axios.getUserList( pageNum );
+    // if (data.status === 10) {
+    //   doLogin();
+    // } 
+    // console.log(data);
+    _user.getUserList(this.state.pageNum).then(res => {
+      console.log(res)
+      this.setState(res);
+    });
+  }
+
   render() {
     return (
       <div id='page-wrapper'>
